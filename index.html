@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js 学习示例 - 为Flutter开发者</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Vue.js 3.x CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">
+            <h1>🚀 Vue.js 学习示例</h1>
+            <p>为Flutter开发者准备的HTML/Vue.js概念演示</p>
+        </header>
+
+        <nav class="nav-tabs">
+            <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id"
+                :class="['tab', { active: activeTab === tab.id }]">
+                {{ tab.name }}
+            </button>
+        </nav>
+
+        <!-- 示例1: 基础列表循环 -->
+        <section v-show="activeTab === 'list'" class="demo-section">
+            <h2>📝 示例1: 列表循环展示 (类似Flutter ListView)</h2>
+            <div class="example-card">
+                <h3>用户列表</h3>
+                <div class="user-list">
+                    <div v-for="user in users" :key="user.id" class="user-item" :class="{ active: user.isActive }">
+                        <img :src="user.avatar" :alt="user.name" class="avatar">
+                        <div class="user-info">
+                            <h4>{{ user.name }}</h4>
+                            <p>{{ user.email }}</p>
+                            <span class="badge" :class="user.isActive ? 'online' : 'offline'">
+                                {{ user.isActive ? '在线' : '离线' }}
+                            </span>
+                        </div>
+                        <button @click="toggleUserStatus(user)" class="toggle-btn">
+                            {{ user.isActive ? '设为离线' : '设为在线' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 示例2: 状态管理和属性更改 -->
+        <section v-show="activeTab === 'state'" class="demo-section">
+            <h2>🔄 示例2: 状态管理 (类似Flutter State管理)</h2>
+            <div class="example-card">
+                <h3>计数器状态管理</h3>
+                <div class="counter-demo">
+                    <div class="counter-display">
+                        <span class="counter-value">{{ counter }}</span>
+                        <p class="counter-status">状态: {{ counterStatus }}</p>
+                    </div>
+                    <div class="counter-controls">
+                        <button @click="decrement" :disabled="counter <= 0">-</button>
+                        <button @click="increment">+</button>
+                        <button @click="reset">重置</button>
+                    </div>
+                </div>
+
+                <h3>表单状态管理</h3>
+                <div class="form-demo">
+                    <input v-model="formData.name" placeholder="输入姓名" class="input-field">
+                    <input v-model="formData.email" placeholder="输入邮箱" class="input-field">
+                    <select v-model="formData.role" class="select-field">
+                        <option value="">选择角色</option>
+                        <option value="admin">管理员</option>
+                        <option value="user">普通用户</option>
+                        <option value="guest">访客</option>
+                    </select>
+                    <div class="form-preview">
+                        <h4>实时预览:</h4>
+                        <p><strong>姓名:</strong> {{ formData.name || '未填写' }}</p>
+                        <p><strong>邮箱:</strong> {{ formData.email || '未填写' }}</p>
+                        <p><strong>角色:</strong> {{ formData.role || '未选择' }}</p>
+                        <p><strong>表单完整性:</strong> {{ formCompleteness }}%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 示例3: 交互式操作 -->
+        <section v-show="activeTab === 'interactive'" class="demo-section">
+            <h2>⚡ 示例3: 交互式操作 (CRUD操作)</h2>
+            <div class="example-card">
+                <h3>待办事项管理</h3>
+                <div class="todo-demo">
+                    <div class="add-todo">
+                        <input v-model="newTodo" @keyup.enter="addTodo" placeholder="添加新任务..." class="input-field">
+                        <button @click="addTodo" :disabled="!newTodo.trim()">添加</button>
+                    </div>
+
+                    <div class="filter-tabs">
+                        <button v-for="filter in filters" :key="filter" @click="currentFilter = filter"
+                            :class="['filter-btn', { active: currentFilter === filter }]">
+                            {{ filter }}
+                        </button>
+                    </div>
+
+                    <div class="todo-list">
+                        <div v-for="todo in filteredTodos" :key="todo.id" class="todo-item"
+                            :class="{ completed: todo.completed }">
+                            <input type="checkbox" v-model="todo.completed" @change="updateTodoStats">
+                            <span class="todo-text">{{ todo.text }}</span>
+                            <button @click="removeTodo(todo.id)" class="delete-btn">删除</button>
+                        </div>
+                    </div>
+
+                    <div class="todo-stats">
+                        <p>总计: {{ todos.length }} | 已完成: {{ completedCount }} | 待完成: {{ pendingCount }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 示例4: 动态样式和条件渲染 -->
+        <section v-show="activeTab === 'styling'" class="demo-section">
+            <h2>🎨 示例4: 动态样式和条件渲染</h2>
+            <div class="example-card">
+                <h3>主题切换</h3>
+                <div class="theme-demo">
+                    <button v-for="theme in themes" :key="theme.name" @click="currentTheme = theme.name"
+                        :class="['theme-btn', theme.name]">
+                        {{ theme.label }}
+                    </button>
+
+                    <div :class="['demo-box', currentTheme]">
+                        <h4>当前主题: {{ currentTheme }}</h4>
+                        <p>这个盒子会根据选择的主题改变样式</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+                        </div>
+                        <button @click="animateProgress">动画演示</button>
+                    </div>
+                </div>
+
+                <h3>条件渲染</h3>
+                <div class="conditional-demo">
+                    <div class="controls">
+                        <label>
+                            <input type="checkbox" v-model="showMessage"> 显示消息
+                        </label>
+                        <label>
+                            <input type="checkbox" v-model="isLoading"> 加载状态
+                        </label>
+                        <label>
+                            <input type="checkbox" v-model="hasError"> 错误状态
+                        </label>
+                    </div>
+
+                    <div class="result-area">
+                        <div v-if="isLoading" class="loading">
+                            <div class="spinner"></div>
+                            <p>加载中...</p>
+                        </div>
+                        <div v-else-if="hasError" class="error">
+                            <p>❌ 出现错误了!</p>
+                        </div>
+                        <div v-else-if="showMessage" class="success">
+                            <p>✅ 操作成功!</p>
+                        </div>
+                        <div v-else class="empty">
+                            <p>请选择一个状态查看效果</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

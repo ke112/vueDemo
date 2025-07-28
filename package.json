@@ -1,0 +1,21 @@
+{
+    "name": "vue-html-learning-project",
+    "version": "1.0.0",
+    "description": "一个帮助Flutter开发者学习HTML/Vue.js的示例项目",
+    "main": "index.html",
+    "scripts": {
+        "dev": "live-server --port=3000",
+        "start": "live-server --port=3000"
+    },
+    "devDependencies": {
+        "live-server": "1.2.2"
+    },
+    "keywords": [
+        "vue",
+        "html",
+        "learning",
+        "frontend"
+    ],
+    "author": "XFN",
+    "license": "MIT"
+}
