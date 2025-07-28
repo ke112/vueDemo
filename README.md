@@ -37,6 +37,10 @@ npm run dev
 
 # 或者
 npm start
+
+# 停止开发服务器
+ctrl c
+
 ```
 然后访问 http://localhost:3000
 
