@@ -24,10 +24,12 @@
             </button>
         </nav>
 
-        <!-- 示例1: 基础列表循环 -->
-        <section v-show="activeTab === 'list'" class="demo-section">
-            <h2>📝 示例1: 列表循环展示 (类似Flutter ListView)</h2>
-            <div class="example-card">
+        <!-- 动态生成所有示例内容 -->
+        <section v-for="tab in tabs" :key="tab.id" v-show="activeTab === tab.id" class="demo-section">
+            <h2>{{ tab.title }}</h2>
+
+            <!-- 示例1: 基础列表循环 -->
+            <div v-if="tab.id === 'list'" class="example-card">
                 <h3>用户列表</h3>
                 <div class="user-list">
                     <div v-for="user in users" :key="user.id" class="user-item" :class="{ active: user.isActive }">
@@ -45,12 +47,9 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- 示例2: 状态管理和属性更改 -->
-        <section v-show="activeTab === 'state'" class="demo-section">
-            <h2>🔄 示例2: 状态管理 (类似Flutter State管理)</h2>
-            <div class="example-card">
+            <!-- 示例2: 状态管理和属性更改 -->
+            <div v-if="tab.id === 'state'" class="example-card">
                 <h3>计数器状态管理</h3>
                 <div class="counter-demo">
                     <div class="counter-display">
@@ -83,12 +82,9 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- 示例3: 交互式操作 -->
-        <section v-show="activeTab === 'interactive'" class="demo-section">
-            <h2>⚡ 示例3: 交互式操作 (CRUD操作)</h2>
-            <div class="example-card">
+            <!-- 示例3: 交互式操作 -->
+            <div v-if="tab.id === 'interactive'" class="example-card">
                 <h3>待办事项管理</h3>
                 <div class="todo-demo">
                     <div class="add-todo">
@@ -117,12 +113,9 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- 示例4: 动态样式和条件渲染 -->
-        <section v-show="activeTab === 'styling'" class="demo-section">
-            <h2>🎨 示例4: 动态样式和条件渲染</h2>
-            <div class="example-card">
+            <!-- 示例4: 动态样式和条件渲染 -->
+            <div v-if="tab.id === 'styling'" class="example-card">
                 <h3>主题切换</h3>
                 <div class="theme-demo">
                     <button v-for="theme in themes" :key="theme.name" @click="currentTheme = theme.name"

@@ -8,10 +8,26 @@ createApp({
             // 标签页管理
             activeTab: 'list',
             tabs: [
-                { id: 'list', name: '列表循环' },
-                { id: 'state', name: '状态管理' },
-                { id: 'interactive', name: '交互操作' },
-                { id: 'styling', name: '动态样式' }
+                {
+                    id: 'list',
+                    name: '列表循环',
+                    title: '📝 示例1: 列表循环展示 (类似Flutter ListView)'
+                },
+                {
+                    id: 'state',
+                    name: '状态管理',
+                    title: '🔄 示例2: 状态管理 (类似Flutter State管理)'
+                },
+                {
+                    id: 'interactive',
+                    name: '交互操作',
+                    title: '⚡ 示例3: 交互式操作 (CRUD操作)'
+                },
+                {
+                    id: 'styling',
+                    name: '动态样式',
+                    title: '🎨 示例4: 动态样式和条件渲染'
+                }
             ],
 
             // 示例1: 用户列表数据
